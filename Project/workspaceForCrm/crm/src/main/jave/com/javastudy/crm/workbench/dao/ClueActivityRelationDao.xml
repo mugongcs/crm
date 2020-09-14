@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.javastudy.crm.workbench.dao.ClueActivityRelationDao">
+    <select id="getCountByCids" resultType="int">
+        select count(*) from tbl_clue_activity_relation
+        where clueId in
+        <foreach collection="array" item="cid" open="(" close=")" separator=",">
+            #{cid}
+        </foreach>
+    </select>
+
+    <delete id="deleteByCids">
+        delete from tbl_clue_activity_relation
+        where clueId in
+        <foreach collection="array" item="cid" open="(" close=")" separator=",">
+            #{cid}
+        </foreach>
+    </delete>
+
+    <select id="getActivityRelation" resultType="Activity">
+        select
+          car.id as id,
+          a.name,
+          a.startDate,
+          a.endDate,
+          u.name as owner
+        from tbl_activity a
+        join tbl_user u
+        on a.owner=u.id
+        join tbl_clue_activity_relation car
+        on a.id=car.activityId
+        where car.clueId=#{clueId}
+    </select>
+
+    <delete id="deleteRelation">
+        delete from tbl_clue_activity_relation where id=#{id}
+    </delete>
+
+    <insert id="bundActivity">
+        insert into tbl_clue_activity_relation(id,clueId,activityId) values(#{id},#{clueId},#{activityId})
+    </insert>
+	
+  	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
