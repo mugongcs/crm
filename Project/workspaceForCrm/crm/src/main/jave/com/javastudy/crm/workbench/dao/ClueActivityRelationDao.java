@@ -18,4 +18,6 @@ public interface ClueActivityRelationDao {
     int deleteRelation(String id);
 
     int bundActivity(ClueActivityRelation car);
+
+    List<ClueActivityRelation> getRelationsByCid(String clueId);
 }

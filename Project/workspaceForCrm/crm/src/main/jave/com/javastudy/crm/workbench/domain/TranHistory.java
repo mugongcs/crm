@@ -1,6 +1,15 @@
 package com.javastudy.crm.workbench.domain;
 
 public class TranHistory {
+    /*
+        id;
+        stage;
+        money;
+        expectedDate;
+        createTime;
+        createBy;
+        tranId;
+     */
     private String id;          //主键
     private String stage;       //阶段
     private String money;       //金额

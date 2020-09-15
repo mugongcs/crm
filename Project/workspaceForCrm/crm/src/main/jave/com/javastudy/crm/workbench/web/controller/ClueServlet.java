@@ -7,13 +7,10 @@ import com.javastudy.crm.utils.DateTimeUtil;
 import com.javastudy.crm.utils.PrintJson;
 import com.javastudy.crm.utils.ServiceFactory;
 import com.javastudy.crm.utils.UUIDUtil;
+import com.javastudy.crm.workbench.dao.ContactsActivityRelationDao;
 import com.javastudy.crm.workbench.domain.*;
-import com.javastudy.crm.workbench.service.ActivityService;
-import com.javastudy.crm.workbench.service.ClueService;
-import com.javastudy.crm.workbench.service.CustomerService;
-import com.javastudy.crm.workbench.service.impl.ActivityServiceImpl;
-import com.javastudy.crm.workbench.service.impl.ClueServiceImpl;
-import com.javastudy.crm.workbench.service.impl.CustomerServiceImpl;
+import com.javastudy.crm.workbench.service.*;
+import com.javastudy.crm.workbench.service.impl.*;
 import com.javastudy.crm.workbench.vo.PaginationVO;
 import com.mysql.cj.Session;
 
@@ -73,12 +70,17 @@ public class ClueServlet extends HttpServlet {
 
         String flag = request.getParameter("flag");
         String clueId = request.getParameter("clueId");
+        String money = null;
+        String name = null;
+        String expectedDate = null;
+        String stage = null;
+        String activityId = null;
         if("tran".equals(flag)){
-            String money = request.getParameter("money");
-            String name = request.getParameter("name");
-            String expectedDate = request.getParameter("expectedDate");
-            String stage = request.getParameter("stage");
-            String activityId = request.getParameter("activityId");
+            money = request.getParameter("money");
+            name = request.getParameter("name");
+            expectedDate = request.getParameter("expectedDate");
+            stage = request.getParameter("stage");
+            activityId = request.getParameter("activityId");
         }
 
         //通过线索Id获取线索详细信息
@@ -87,23 +89,27 @@ public class ClueServlet extends HttpServlet {
 
         //查询是否存在线索对应的客户信息
         CustomerService custs = (CustomerService) ServiceFactory.getService(new CustomerServiceImpl());
-        boolean exit = custs.getByName(c.getCompany());
-        if(exit){
+        Customer customer = custs.getByName(c.getCompany());
+        String customerId = null;
+        if(customer != null){
+            customerId = customer.getId();
             System.out.println("线索对应客户已存在");
         }else{
-            String id = UUIDUtil.getUUID();
+            customerId = UUIDUtil.getUUID();
             String owner = c.getOwner();
-            String name = c.getCompany();
+            name = c.getCompany();
             String createBy = ((User) request.getSession().getAttribute("user")).getName();
             String createTime = DateTimeUtil.getSysTime();
 
             Customer cust = new Customer();
-            cust.setId(id);
+            cust.setId(customerId);
             cust.setOwner(owner);
             cust.setName(name);
             cust.setCreateBy(createBy);
             cust.setCreateTime(createTime);
+            customer = cust;
 
+            custs = (CustomerService) ServiceFactory.getService(new CustomerServiceImpl());
             boolean result = custs.create(cust);
             if(result){
                 System.out.println("通过线索创建客户信息成功");
@@ -113,6 +119,124 @@ public class ClueServlet extends HttpServlet {
         }
 
         //保存联系人
+        Contacts cont = new Contacts();
+        String contactsId = UUIDUtil.getUUID();
+        cont.setId(UUIDUtil.getUUID());
+        cont.setOwner(c.getOwner());
+        cont.setSource(c.getSource());
+        cont.setCustomerId(customer.getId());
+        cont.setFullname(c.getFullname());
+        cont.setAppellation(c.getAppellation());
+        cont.setEmail(c.getEmail());
+        cont.setMphone(c.getMphone());
+        cont.setJob(c.getJob());
+        cont.setCreateBy(((User) request.getSession().getAttribute("user")).getName());
+        cont.setCreateTime(DateTimeUtil.getSysTime());
+        cont.setDescription(c.getDescription());
+        cont.setContactSummary(c.getContactSummary());
+        cont.setNextContactTime(c.getNextContactTime());
+        cont.setAddress(c.getAddress());
+
+        ContactsService conts = (ContactsService) ServiceFactory.getService(new ContactsServiceImpl());
+        boolean result = conts.save(cont);
+        if(result){
+            System.out.println("创建联系人成功");
+        }else{
+            System.out.println("创建联系人失败");
+        }
+
+        //将线索备注转换到客户备注和联系人备注
+        cs = (ClueService) ServiceFactory.getService(new ClueServiceImpl());
+        List<ClueRemark> crList = cs.getRemarkListByCid(clueId);
+        for(ClueRemark cr : crList){
+            cr.setId(UUIDUtil.getUUID());
+            cr.setClueId(customerId);
+            custs = (CustomerService) ServiceFactory.getService(new CustomerServiceImpl());
+            result = custs.saveRemark(cr);
+            if(!result){
+                System.out.println("创建客户备注失败");
+            }
+            cr.setId(UUIDUtil.getUUID());
+            cr.setClueId(contactsId);
+            conts = (ContactsService) ServiceFactory.getService(new ContactsServiceImpl());
+            result = conts.saveRemark(cr);
+            if(!result){
+                System.out.println("创建联系人备注失败");
+            }
+        }
+
+        //将线索关联的市场活动转换到联系人关联的市场活动
+        cs = (ClueService) ServiceFactory.getService(new ClueServiceImpl());
+        List<ClueActivityRelation> carList = cs.getRelationsByCid(clueId);
+        for(ClueActivityRelation car : carList){
+            ContactsActivityRelation contar = new ContactsActivityRelation();
+            contar.setId(UUIDUtil.getUUID());
+            contar.setActivityId(car.getActivityId());
+            contar.setContactsId(contactsId);
+            conts = (ContactsService) ServiceFactory.getService(new ContactsServiceImpl());
+            result = conts.bund(contar);
+            if(!result){
+                System.out.println("联系人关联市场活动失败");
+            }
+        }
+
+        //创建交易相关内容
+        if("tran".equals(flag)){
+            //创建交易
+            Tran t = new Tran();
+            String tranId = UUIDUtil.getUUID();
+            t.setId(tranId);
+            t.setOwner(c.getOwner());
+            t.setMoney(money);
+            t.setName(name);
+            t.setExpectedDate(expectedDate);
+            t.setCustomerId(customerId);
+            t.setStage(stage);
+            t.setSource(c.getSource());
+            t.setActivityId(activityId);
+            t.setContactsId(contactsId);
+            t.setCreateBy(((User) request.getSession().getAttribute("user")).getName());
+            t.setCreateTime(DateTimeUtil.getSysTime());
+            t.setDescription(c.getDescription());
+            t.setContactSummary(c.getContactSummary());
+            t.setNextContactTime(c.getNextContactTime());
+
+            TranService ts = (TranService) ServiceFactory.getService(new TranServiceImpl());
+            result = ts.save(t);
+            if(!result){
+                System.out.println("创建交易失败");
+            }else{
+                //创建交易历史
+
+                TranHistory tranH = new TranHistory();
+                tranH.setId(UUIDUtil.getUUID());
+                tranH.setStage(stage);
+                tranH.setMoney(money);
+                tranH.setExpectedDate(expectedDate);
+                tranH.setCreateBy(((User) request.getSession().getAttribute("user")).getName());
+                tranH.setCreateTime(DateTimeUtil.getSysTime());
+                tranH.setTranId(tranId);
+
+                ts = (TranService) ServiceFactory.getService(new TranServiceImpl());
+                result = ts.saveHistory(tranH);
+                if(!result){
+                    System.out.println("创建交易历史失败");
+                }
+            }
+
+            //删除线索以及相关的信息
+            cs = (ClueService) ServiceFactory.getService(new ClueServiceImpl());
+            String[] ids = {clueId};
+            result = cs.delete(ids);
+            if(result){
+                System.out.println("线索转换成功");
+            }else{
+                System.out.println("线索转换失败");
+            }
+
+        }
+
+
 
     }
 

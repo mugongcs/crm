@@ -184,4 +184,10 @@ public class ClueServiceImpl implements ClueService {
 
         return flag;
     }
+
+    @Override
+    public List<ClueActivityRelation> getRelationsByCid(String clueId) {
+        List<ClueActivityRelation> carList = cARDao.getRelationsByCid(clueId);
+        return carList;
+    }
 }

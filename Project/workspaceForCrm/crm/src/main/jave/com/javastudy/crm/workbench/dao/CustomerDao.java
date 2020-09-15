@@ -4,7 +4,7 @@ import com.javastudy.crm.workbench.domain.Customer;
 
 public interface CustomerDao {
 
-    int getByName(String company);
+    Customer getByName(String company);
 
     int create(Customer cust);
 }

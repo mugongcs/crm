@@ -8,5 +8,7 @@ DEBUG [http-nio-8080-exec-6] - VFS implementation org.apache.ibatis.io.JBoss6VFS
 DEBUG [http-nio-8080-exec-6] - Using VFS adapter org.apache.ibatis.io.DefaultVFS
 原因：MyBatis错误----->xml文件中namespace出错
 
-提示信息：tomacat服务器运行中关闭IDEA，出现占用通道，无法启动
-解决方案：后台手动关闭进程
+提示信息：Unable to open debugger port (127.0.0.1:63562): java.net.SocketException "socket closed"
+原因：tomacat服务器为正常关闭，出现通道占用
+解决方案：后台--->netstat -aon|findstr “1099”(查找占用端口的进程)
+                 taskkill -f -pid 进程号 (关闭进程)

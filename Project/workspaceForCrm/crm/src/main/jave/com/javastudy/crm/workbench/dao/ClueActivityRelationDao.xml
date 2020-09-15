@@ -42,6 +42,14 @@
     <insert id="bundActivity">
         insert into tbl_clue_activity_relation(id,clueId,activityId) values(#{id},#{clueId},#{activityId})
     </insert>
+
+    <select id="getRelationsByCid" resultType="ClueActivityRelation">
+        select
+            *
+        from
+            tbl_clue_activity_relation
+        where clueId=#{clueId}
+    </select>
 	
   	
 </mapper>

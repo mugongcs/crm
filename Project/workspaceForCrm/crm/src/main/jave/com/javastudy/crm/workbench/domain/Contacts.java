@@ -1,6 +1,27 @@
 package com.javastudy.crm.workbench.domain;
 
 public class Contacts {
+    /*
+        id;
+        owner;
+        source;
+        customerId;
+        fullname;
+        appellation;
+        email;
+        mphone;
+        job;
+        birth;
+        createBy;
+        createTime;
+        editBy;
+        editTime;
+        description;
+        contactSummary;
+        nextContactTime;
+        address;
+     */
+
     private String id;              //主键
     private String owner;           //所有者
     private String source;          //来源
@@ -19,6 +40,14 @@ public class Contacts {
     private String contactSummary;  //联系纪要
     private String nextContactTime; //下次联系时间
     private String address;         //详细地址
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     public String getId() {
         return id;

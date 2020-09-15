@@ -35,4 +35,6 @@ public interface ClueService {
     boolean deleteRelation(String id);
 
     boolean bundActivity(String clueId, String[] activityIds);
+
+    List<ClueActivityRelation> getRelationsByCid(String clueId);
 }

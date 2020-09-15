@@ -1,6 +1,27 @@
 package com.javastudy.crm.workbench.domain;
 
 public class Tran {
+    /*
+        id;
+        owner;
+        money;
+        name;
+        expectedDate;
+        customerId;
+        stage;
+        type;
+        source;
+        activityId;
+        contactsId;
+        createBy;
+        createTime;
+        editBy;
+        editTime;
+        description;
+        contactSummary;
+        nextContactTime;
+     */
+
     private String id;              //主键
     private String owner;           //所有者
     private String money;           //金额
