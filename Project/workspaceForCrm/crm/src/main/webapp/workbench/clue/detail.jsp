@@ -153,7 +153,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
                         var html = "";
                         $.each(data,function(i,n){
                             html += '<tr>';
-                            html += '    <td><input type="checkbox" name="selectActivity" value='+n.id+'/></td>';
+                            html += '    <td><input type="checkbox" name="selectActivity" value='+n.id+'></td>';
                             html += '    <td>'+n.name+'</td>';
                             html += '    <td>'+n.startDate+'</td>';
                             html += '    <td>'+n.endDate+'</td>';
@@ -210,10 +210,12 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
         //为全选复选框绑定时间
         $("#selectAll").click(function(){
             $("input[name=selectActivity]").prop("checked",this.checked);
-        })
+        });
         $("#activityListBody").on("click",$("input[name=selectActivity]"),function(){
             $("#selectAll").prop("checked",$("input[name=selectActivity]").length==$("input[name=selectActivity]:checked").length);
-        })
+        });
+
+        //
 
 
 
@@ -598,7 +600,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			<h3>${c.fullname}${c.appellation} <small>${c.company}</small></h3>
 		</div>
 		<div style="position: relative; height: 50px; width: 500px;  top: -72px; left: 700px;">
-			<button type="button" class="btn btn-default" onclick="window.location.href='workbench/clue/convert.jsp';"><span class="glyphicon glyphicon-retweet"></span> 转换</button>
+			<button type="button" class="btn btn-default" onclick="window.location.href='workbench/clue/convert.jsp?id=${c.id}&fullname=${c.fullname}&appellation=${c.appellation}&company=${c.company}&owner=${c.owner}';"><span class="glyphicon glyphicon-retweet"></span> 转换</button>
 			<button type="button" class="btn btn-default" data-toggle="modal" data-target="#editClueModal"><span class="glyphicon glyphicon-edit"></span> 编辑</button>
 			<button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-minus"></span> 删除</button>
 		</div>

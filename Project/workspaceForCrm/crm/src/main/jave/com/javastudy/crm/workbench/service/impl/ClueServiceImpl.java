@@ -174,6 +174,7 @@ public class ClueServiceImpl implements ClueService {
             car.setId(UUIDUtil.getUUID());
             car.setClueId(clueId);
             car.setActivityId(activityId);
+            System.out.println(activityId.length());
 
             int count = cARDao.bundActivity(car);
             if(count != 1){

@@ -62,7 +62,41 @@ public class ClueServlet extends HttpServlet {
             getActivityByName(request,response);
         }else if("/workbench/clue/bundActivity.do".equals(path)){
             bundActivity(request,response);
+        }else if("/workbench/clue/getActivityByAName.do".equals(path)){
+            getActivityByAName(request,response);
+        }else if("/workbench/clue/convert.do".equals(path)){
+            convert(request,response);
         }
+    }
+
+    private void convert(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("进入线索转换操作");
+
+        String flag = request.getParameter("flag");
+        String clueId = request.getParameter("clueId");
+        if("tran".equals(flag)){
+            String money = request.getParameter("money");
+            String name = request.getParameter("name");
+            String expectedDate = request.getParameter("expectedDate");
+            String stage = request.getParameter("stage");
+            String activityId = request.getParameter("activityId");
+        }
+
+        //通过线索Id获取线索详细信息
+        ClueService cs = (ClueService) ServiceFactory.getService(new ClueServiceImpl());
+        Clue c = cs.getById(clueId);
+
+        //查询是否存在线索对应的客户信息
+    }
+
+    private void getActivityByAName(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("通过名称获取所有的市场活动信息");
+
+        String aname = request.getParameter("aname");
+
+        ActivityService as = (ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
+        List<Activity> aList = as.getActivityByAName(aname);
+        PrintJson.printJsonObj(response, aList);
     }
 
     private void bundActivity(HttpServletRequest request, HttpServletResponse response) {

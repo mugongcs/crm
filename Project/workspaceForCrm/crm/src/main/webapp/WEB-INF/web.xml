@@ -85,6 +85,8 @@
         <url-pattern>/workbench/clue/deleteRelation.do</url-pattern>
         <url-pattern>/workbench/clue/getActivityByName.do</url-pattern>
         <url-pattern>/workbench/clue/bundActivity.do</url-pattern>
+        <url-pattern>/workbench/clue/getActivityByAName.do</url-pattern>
+        <url-pattern>/workbench/clue/convert.do</url-pattern>
 
 
     </servlet-mapping>

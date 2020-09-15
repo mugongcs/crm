@@ -29,4 +29,6 @@ public interface ActivityService {
     boolean updateRemark(ActivityRemark ar);
 
     List<Activity> getActivityByName(Map<String, String> map);
+
+    List<Activity> getActivityByAName(String aname);
 }
