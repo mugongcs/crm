@@ -95,9 +95,12 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
             if($("#isCreateTransaction").prop("checked")){
                 //通过提交表单的方式传递参数
                 $("#tranForm").submit();
+                window.history.go(-2);
+
             }else{
                 //通过传统方式访问
                 window.location.href = "workbench/clue/convert.do?flag=n&clueId=${param.id}";
+                window.history.go(-2);
             }
         });
 

@@ -224,19 +224,16 @@ public class ClueServlet extends HttpServlet {
                 }
             }
 
-            //删除线索以及相关的信息
-            cs = (ClueService) ServiceFactory.getService(new ClueServiceImpl());
-            String[] ids = {clueId};
-            result = cs.delete(ids);
-            if(result){
-                System.out.println("线索转换成功");
-            }else{
-                System.out.println("线索转换失败");
-            }
-
         }
-
-
+        //删除线索以及相关的信息
+        cs = (ClueService) ServiceFactory.getService(new ClueServiceImpl());
+        String[] ids = {clueId};
+        result = cs.delete(ids);
+        if(result){
+            System.out.println("线索转换成功");
+        }else{
+            System.out.println("线索转换失败");
+        }
 
     }
 
