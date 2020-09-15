@@ -7,14 +7,13 @@ import com.javastudy.crm.utils.DateTimeUtil;
 import com.javastudy.crm.utils.PrintJson;
 import com.javastudy.crm.utils.ServiceFactory;
 import com.javastudy.crm.utils.UUIDUtil;
-import com.javastudy.crm.workbench.domain.Activity;
-import com.javastudy.crm.workbench.domain.Clue;
-import com.javastudy.crm.workbench.domain.ClueActivityRelation;
-import com.javastudy.crm.workbench.domain.ClueRemark;
+import com.javastudy.crm.workbench.domain.*;
 import com.javastudy.crm.workbench.service.ActivityService;
 import com.javastudy.crm.workbench.service.ClueService;
+import com.javastudy.crm.workbench.service.CustomerService;
 import com.javastudy.crm.workbench.service.impl.ActivityServiceImpl;
 import com.javastudy.crm.workbench.service.impl.ClueServiceImpl;
+import com.javastudy.crm.workbench.service.impl.CustomerServiceImpl;
 import com.javastudy.crm.workbench.vo.PaginationVO;
 import com.mysql.cj.Session;
 
@@ -87,6 +86,34 @@ public class ClueServlet extends HttpServlet {
         Clue c = cs.getById(clueId);
 
         //查询是否存在线索对应的客户信息
+        CustomerService custs = (CustomerService) ServiceFactory.getService(new CustomerServiceImpl());
+        boolean exit = custs.getByName(c.getCompany());
+        if(exit){
+            System.out.println("线索对应客户已存在");
+        }else{
+            String id = UUIDUtil.getUUID();
+            String owner = c.getOwner();
+            String name = c.getCompany();
+            String createBy = ((User) request.getSession().getAttribute("user")).getName();
+            String createTime = DateTimeUtil.getSysTime();
+
+            Customer cust = new Customer();
+            cust.setId(id);
+            cust.setOwner(owner);
+            cust.setName(name);
+            cust.setCreateBy(createBy);
+            cust.setCreateTime(createTime);
+
+            boolean result = custs.create(cust);
+            if(result){
+                System.out.println("通过线索创建客户信息成功");
+            }else{
+                System.out.println("通过线索创建客户信息失败");
+            }
+        }
+
+        //保存联系人
+
     }
 
     private void getActivityByAName(HttpServletRequest request, HttpServletResponse response) {
