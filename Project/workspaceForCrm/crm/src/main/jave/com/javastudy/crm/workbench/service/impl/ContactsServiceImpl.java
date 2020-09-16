@@ -10,6 +10,8 @@ import com.javastudy.crm.workbench.domain.ContactsActivityRelation;
 import com.javastudy.crm.workbench.domain.ContactsRemark;
 import com.javastudy.crm.workbench.service.ContactsService;
 
+import java.util.List;
+
 public class ContactsServiceImpl  implements ContactsService {
     private ContactsDao contactsDao = SqlSessionUtil.getSqlSession().getMapper(ContactsDao.class);
     private ContactsRemarkDao contactsRemarkDao = SqlSessionUtil.getSqlSession().getMapper(ContactsRemarkDao.class);
@@ -46,5 +48,11 @@ public class ContactsServiceImpl  implements ContactsService {
             flag = false;
         }
         return flag;
+    }
+
+    @Override
+    public List<Contacts> getContactsListByName(String fullname) {
+        List<Contacts> contList = contactsDao.getContactsListByName(fullname);
+        return contList;
     }
 }

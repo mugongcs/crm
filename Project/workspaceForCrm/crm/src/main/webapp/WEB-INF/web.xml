@@ -87,8 +87,19 @@
         <url-pattern>/workbench/clue/bundActivity.do</url-pattern>
         <url-pattern>/workbench/clue/getActivityByAName.do</url-pattern>
         <url-pattern>/workbench/clue/convert.do</url-pattern>
+    </servlet-mapping>
 
-
+    <!--交易活动控制器-->
+    <servlet>
+        <servlet-name>TranServlet</servlet-name>
+        <servlet-class>com.javastudy.crm.workbench.web.controller.TranServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TranServlet</servlet-name>
+        <url-pattern>/workbench/transaction/create.do</url-pattern>
+        <url-pattern>/workbench/transaction/getActivityListByName.do</url-pattern>
+        <url-pattern>/workbench/transaction/getContactsListByName.do</url-pattern>
+        <url-pattern>/workbench/transaction/getCustomerName.do</url-pattern>
     </servlet-mapping>
 
 

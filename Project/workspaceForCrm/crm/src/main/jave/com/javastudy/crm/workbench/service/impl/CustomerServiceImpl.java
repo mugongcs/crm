@@ -7,6 +7,8 @@ import com.javastudy.crm.workbench.domain.ClueRemark;
 import com.javastudy.crm.workbench.domain.Customer;
 import com.javastudy.crm.workbench.service.CustomerService;
 
+import java.util.List;
+
 public class CustomerServiceImpl implements CustomerService {
     private CustomerDao customerDao = SqlSessionUtil.getSqlSession().getMapper(CustomerDao.class);
     private CustomerRemarkDao customerRemarkDao = SqlSessionUtil.getSqlSession().getMapper(CustomerRemarkDao.class);
@@ -44,5 +46,11 @@ public class CustomerServiceImpl implements CustomerService {
             flag = false;
         }
         return flag;
+    }
+
+    @Override
+    public List<String> getCustomerName(String name) {
+        List<String> sList = customerDao.getCustomerName(name);
+        return sList;
     }
 }

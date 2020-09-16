@@ -15,6 +15,14 @@
     <insert id="create">
         insert into tbl_customer(id,owner,name,createBy,createTime) values(#{id},#{owner},#{name},#{createBy},#{createTime})
     </insert>
+
+    <select id="getCustomerName" resultType="String">
+        select
+            name
+        from
+            tbl_customer
+        where name like '%' #{name} '%'
+    </select>
 	
   	
 </mapper>

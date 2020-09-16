@@ -40,6 +40,14 @@
             #{address}
         )
     </insert>
+
+    <select id="getContactsListByName" resultType="Contacts">
+        select
+            *
+        from
+            tbl_contacts
+        where fullname like '%' #{fullname} '%'
+    </select>
 	
   	
 </mapper>
