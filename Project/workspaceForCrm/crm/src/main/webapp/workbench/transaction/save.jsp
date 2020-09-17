@@ -123,8 +123,8 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
                             $.each(data,function(i,n){
                                 html += '<tr>';
                                 html += '    <td><input type="radio" name="contact" value="'+n.id+'"></td>';
-                                html += '        <td id="name'+n.id+'">'+n.fullname+'</td>';
-                                html += '        <td>'+n.email+'</td>';
+                                html += '    <td id="name'+n.id+'">'+n.fullname+'</td>';
+                                html += '    <td>'+n.email+'</td>';
                                 html += '    <td>'+n.mphone+'</td>';
                                 html += '</tr>';
                             });

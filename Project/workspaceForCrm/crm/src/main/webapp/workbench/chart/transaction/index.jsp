@@ -82,6 +82,6 @@
 </head>
 <body>
     <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
-    <div id="main" style="width: 800px;height: 500px;"></div>
+    <div id="main" style="width: 800px; height: 500px;"></div>
 </body>
 </html>
