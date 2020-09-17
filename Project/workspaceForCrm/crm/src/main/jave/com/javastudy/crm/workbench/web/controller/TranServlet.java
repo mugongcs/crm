@@ -19,6 +19,7 @@ import com.javastudy.crm.workbench.service.impl.ActivityServiceImpl;
 import com.javastudy.crm.workbench.service.impl.ContactsServiceImpl;
 import com.javastudy.crm.workbench.service.impl.CustomerServiceImpl;
 import com.javastudy.crm.workbench.service.impl.TranServiceImpl;
+import com.javastudy.crm.workbench.vo.PaginationVO;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -53,7 +54,17 @@ public class TranServlet extends HttpServlet {
             getHistoryListByTranId(request,response);
         }else if("/workbench/transaction/changeStage.do".equals(path)){
             changeStage(request,response);
+        }else if("/workbench/transaction/getCharts.do".equals(path)){
+            getCharts(request,response);
         }
+    }
+
+    private void getCharts(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("获取交易阶段数量统计图表的数据");
+
+        TranService ts = (TranService) ServiceFactory.getService(new TranServiceImpl());
+        Map<String, Object> map = ts.getCharts();
+        PrintJson.printJsonObj(response, map);
     }
 
     private void changeStage(HttpServletRequest request, HttpServletResponse response) {

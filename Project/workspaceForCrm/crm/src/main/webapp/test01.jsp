@@ -20,10 +20,8 @@
 
             }
         });
-
         String createTime = DateTimeUtil.getSysTime();
         String createBy = ((User) request.getSession().getAttribute("user")).getName();
-
 
     //日历控件
     <link href="jquery/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" />
@@ -40,20 +38,20 @@
 
     <!--自动补全插件-->
     <script type="text/javascript" src="jquery/bs_typeahead/bootstrap3-typeahead.min.js"></script>
-    $("#create-customerName").typeahead({
-        source: function (query, process) {
-            $.post(
-                "workbench/transaction/getCustomerName.do",
-                { "name" : query },
-                function (data) {
-                    //alert(data);
-                    process(data);
-                },
-                "json"
-            );
-        },
-        delay: 1500
-    });
+        $("#create-customerName").typeahead({
+            source: function (query, process) {
+                $.post(
+                    "workbench/transaction/getCustomerName.do",
+                    { "name" : query },
+                    function (data) {
+                        //alert(data);
+                        process(data);
+                    },
+                    "json"
+                );
+            },
+            delay: 1500
+        });
     </script>
 </head>
 <body>
