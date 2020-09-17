@@ -157,17 +157,17 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					<tbody>
 						<tr>
 							<td><input type="checkbox" /></td>
-							<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='workbench/transaction/detail.jsp';">动力节点-交易01</a></td>
-							<td>动力节点</td>
-							<td>谈判/复审</td>
+							<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='workbench/transaction/detail.do?id=1f1bc827edf445e598e661e601c72abf';">交易-阿里</a></td>
+							<td>阿里</td>
+							<td>06谈判/复审</td>
 							<td>新业务</td>
-							<td>zhangsan</td>
-							<td>广告</td>
-							<td>李四</td>
+							<td>张三</td>
+							<td>公开媒介</td>
+							<td>刘一</td>
 						</tr>
                         <tr class="active">
                             <td><input type="checkbox" /></td>
-                            <td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='detail.jsp';">动力节点-交易01</a></td>
+                            <td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='workbench/transaction/detail.do?id=ff2cc23a866b445190b87dfd27ed106e';">交易123</a></td>
                             <td>动力节点</td>
                             <td>谈判/复审</td>
                             <td>新业务</td>

@@ -18,6 +18,17 @@ public class TranHistory {
     private String createBy;    //创建人
     private String tranId;      //交易ID
 
+    //扩充可能性，在交易详细信息页中使用
+    private String possibility; //可能性
+
+    public String getPossibility() {
+        return possibility;
+    }
+
+    public void setPossibility(String possibility) {
+        this.possibility = possibility;
+    }
+
     public String getId() {
         return id;
     }

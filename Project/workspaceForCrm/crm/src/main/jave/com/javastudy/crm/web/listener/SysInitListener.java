@@ -8,9 +8,7 @@ import com.javastudy.crm.utils.ServiceFactory;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class SysInitListener implements ServletContextListener {
     @Override
@@ -28,6 +26,20 @@ public class SysInitListener implements ServletContextListener {
         }
         System.out.println("缓存数据字典结束");
 
+
+        //-----------------------------------------------------------------
+        //数据处理完毕之后，处理Stage2Possibility.properties文件
+        //-----------------------------------------------------------------
+        Map<String,String> pMap = new HashMap<String, String>();
+        //解析properties文件
+        ResourceBundle rb = ResourceBundle.getBundle("Stage2Possibility");
+        Enumeration<String> e = rb.getKeys();
+        while (e.hasMoreElements()){
+            String key = e.nextElement();
+            String value = rb.getString(key);
+            pMap.put(key, value);
+        }
+        application.setAttribute("pMap", pMap);
 
     }
 }
