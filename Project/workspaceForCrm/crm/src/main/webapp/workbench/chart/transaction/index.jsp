@@ -21,9 +21,9 @@
                 type : "get",
                 datatype : "json",
                 success : function(data){
-                    /*
+                *
                     data:{"total":int,"dataList":[{value:60,name:"01资质审查"},{},...]}
-                     */
+                *//
                     // 基于准备好的dom，初始化echarts实例
                     var myChart = echarts.init(document.getElementById('main'));
 
