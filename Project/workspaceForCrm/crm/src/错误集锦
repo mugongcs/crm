@@ -14,6 +14,6 @@
 原因：
     tomacat服务器为正常关闭，出现通道占用
 解决方案：
-    后台--->netstat -aon|findstr “1099”(查找占用端口的进程)
-                 taskkill -f -pid 进程号 (关闭进程)
+    后台--->  netstat -aon|findstr “1099”(查找占用端口的进程)
+              taskkill -f -pid 进程号 (关闭进程)
 
