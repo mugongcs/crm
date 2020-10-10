@@ -1,14 +1,19 @@
 
-提示信息：
-DEBUG [http-nio-8080-exec-6] - Logging initialized using 'class org.apache.ibatis.logging.log4j.Log4jImpl' adapter.
-DEBUG [http-nio-8080-exec-6] - Class not found: org.jboss.vfs.VFS
-DEBUG [http-nio-8080-exec-6] - JBoss 6 VFS API is not available in this environment.
-DEBUG [http-nio-8080-exec-6] - Class not found: org.jboss.vfs.VirtualFile
-DEBUG [http-nio-8080-exec-6] - VFS implementation org.apache.ibatis.io.JBoss6VFS is not valid in this environment.
-DEBUG [http-nio-8080-exec-6] - Using VFS adapter org.apache.ibatis.io.DefaultVFS
-原因：MyBatis错误----->xml文件中namespace出错
+1、提示信息：
+    DEBUG [http-nio-8080-exec-6] - Logging initialized using 'class org.apache.ibatis.logging.log4j.Log4jImpl' adapter.
+    DEBUG [http-nio-8080-exec-6] - Class not found: org.jboss.vfs.VFS
+    DEBUG [http-nio-8080-exec-6] - JBoss 6 VFS API is not available in this environment.
+    DEBUG [http-nio-8080-exec-6] - Class not found: org.jboss.vfs.VirtualFile
+    DEBUG [http-nio-8080-exec-6] - VFS implementation org.apache.ibatis.io.JBoss6VFS is not valid in this environment.
+    DEBUG [http-nio-8080-exec-6] - Using VFS adapter org.apache.ibatis.io.DefaultVFS
+原因：
+    MyBatis错误----->xml文件中namespace出错
 
-提示信息：Unable to open debugger port (127.0.0.1:63562): java.net.SocketException "socket closed"
-原因：tomacat服务器为正常关闭，出现通道占用
-解决方案：后台--->netstat -aon|findstr “1099”(查找占用端口的进程)
+2、提示信息：
+    Unable to open debugger port (127.0.0.1:63562): java.net.SocketException "socket closed"
+原因：
+    tomacat服务器为正常关闭，出现通道占用
+解决方案：
+    后台--->netstat -aon|findstr “1099”(查找占用端口的进程)
                  taskkill -f -pid 进程号 (关闭进程)
+
